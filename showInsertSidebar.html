@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+      function preventFormSubmit() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(event) {
+            event.preventDefault();
+          });
+        }
+      }
+      window.addEventListener('load', preventFormSubmit);
+      
+      // function stripHTML(){
+      //   var re = /(<([^>]+)>)/gi;
+      //   for (i=0; i < arguments.length; i++)
+      //   arguments[i].value=arguments[i].value.replace(re, "")
+      // }
+    </script>
+  </head>
+  <body>
+    <form id="myForm" onsubmit="google.script.run.insertLyrics(this)">
+      <input type="submit" value="Submit" />
+      <br/>
+      <? var layoutsData = getActivePresentationLayoutsData(); ?>
+      <label for="layout-template">The layout template: </label>
+      <select id="layout-template" name="layout-template">
+        <?  for (i in layoutsData.displayNames) { ?>
+          <? if (layoutsData.haveBodyTextBooleans[i]) { ?>
+            <option value="<?= i ?>"><?= layoutsData.displayNames[i] ?></option>
+          <? } else  { ?>
+            <option value="<?= i ?>" disabled><?= layoutsData.displayNames[i] ?></option>
+          <? } ?>
+        <? } ?>
+      </select>
+      <br/>
+      <p>Please ensure your template has a "Body text placeholder" present</p>
+      <br/>
+      <label for="lyrics-text">Lyrics Text:</label>
+      <br/>
+      <textarea id="lyrics-text" name="lyrics-text" rows="50" style="height:100%; width:100%">Insert plain text Lyrics here</textarea>
+      <br>   
+      <input type="submit" value="Submit" />
+      <!-- <input type="button" value="Close" onclick="google.script.host.close()" /> -->
+    </form>
+  </body>
+</html>
