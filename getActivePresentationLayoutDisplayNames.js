@@ -1,7 +1,7 @@
 /**`
  * @return object
  */
-function getActivePresentationLayoutDisplayNames()
+function getActivePresentationLayoutDisplayNamesObject()
 {
   var output = {};  
   var presentationID = SlidesApp.getActivePresentation().getId();
@@ -13,6 +13,7 @@ function getActivePresentationLayoutDisplayNames()
 }
 
 /**
+ * @param object layout
  * @return bool
  */
 function hasTemplateGotTitle(layout)
@@ -26,7 +27,7 @@ function hasTemplateGotTitle(layout)
 /**
  * @return object 
  */
-function getActivePresentationLayoutsHasTitle()
+function getActivePresentationLayoutsHasTitleObject()
 {
   var output = {};
   var layouts = SlidesApp.getActivePresentation().getLayouts();
@@ -37,6 +38,7 @@ function getActivePresentationLayoutsHasTitle()
 }
 
 /**
+ * @param object layout
  * @return bool
  */
 function hasTemplateGotBodyText(layout)
@@ -51,7 +53,7 @@ function hasTemplateGotBodyText(layout)
 /**
  * @return object 
  */
-function getActivePresentationLayoutsHasBodyText()
+function getActivePresentationLayoutsHasBodyTextObject()
 {
   var output = {};
   var layouts = SlidesApp.getActivePresentation().getLayouts();
@@ -61,11 +63,14 @@ function getActivePresentationLayoutsHasBodyText()
   return output;
 }
 
-function getActivePresentationLayoutsData()
+/**
+ * @return object
+ */
+function getActivePresentationLayoutsObject()
 {
   return {
-    displayNames: getActivePresentationLayoutDisplayNames(),
-    hasTitleBooleans: getActivePresentationLayoutsHasTitle(),
-    hasBodyTextBooleans: getActivePresentationLayoutsHasBodyText()
+    displayNames: getActivePresentationLayoutDisplayNamesObject(),
+    hasTitleBooleans: getActivePresentationLayoutsHasTitleObject(),
+    hasBodyTextBooleans: getActivePresentationLayoutsHasBodyTextObject()
   }
 }

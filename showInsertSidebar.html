@@ -42,32 +42,18 @@
       document.addEventListener(
         'DOMContentLoaded',
         () => {
-          google.script.run.withSuccessHandler(showTemplates)
-            .withFailureHandler(showTemplatesFailure)
-            .getActivePresentationLayoutsData();
+          google.script.run.withSuccessHandler(updateDropdowns)
+            .getInnerHtmlObject();
         }
       );
-      function showTemplates(layoutsData) {
-        google.script.run.withSuccessHandler(updateMainDropdown)
-          .getMainDropdownInnerHtml(layoutsData);
-        google.script.run.withSuccessHandler(updateTitleDropdown)
-          .getTitleDropdownInnerHtml(layoutsData);
+      function updateDropdowns(innerHTML) {
+        document.getElementById('title-layout-template').innerHTML = innerHTML['title-layouts'];
+        document.getElementById('layout-template').innerHTML = innerHTML['body-text-layouts'];
       }
-      function updateTitleDropdown(innerHTML) {
-        document.getElementById('title-layout-template').innerHTML = innerHTML;
-      }
-      function updateMainDropdown(innerHTML) {
-        document.getElementById('layout-template').innerHTML = innerHTML;
-      }
-
       function showTemplatesFailure(error){
         var div = document.getElementById('layout-template');
-        div.innerHTML = '<option class="error">'+getFriendlyItemNotFoundErrorMessage('layouts')+'</li>';
+        div.innerHTML = '<option class="error">Ooops, my deputy failed to find the layouts. No more chips for him!</option>';
       }
-      function getFriendlyItemNotFoundErrorMessage(item){
-        return 'Ooops, my deputy failed to find the '+item+'. No more chips for him!';
-      }
-
     </script>
   </body>
 </html>

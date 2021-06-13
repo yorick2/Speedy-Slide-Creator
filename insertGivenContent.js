@@ -2,7 +2,7 @@
  * @param formObject 
  * @return bool
  */
-function shouldRunInsertGivenContent(formObject)
+function shouldRunInsertGivenContentBoolean(formObject)
 {
   if (!('content-text' in formObject))
   {
@@ -21,7 +21,7 @@ function shouldRunInsertGivenContent(formObject)
 * @param string content 
 * @return array
 */
-function splitContent(content)
+function splitContentStringIntoArray(content)
 {
   return content.split(/\r?\n\s*\r?\n/);
 }
@@ -33,9 +33,9 @@ function splitContent(content)
 // }
 
 /**
- * @param string slection
+ * @param object slection
  */
-function getTemplate(selection)
+function getTemplateObject(selection)
 {
   var layouts = SlidesApp.getActivePresentation().getLayouts();
   for(var i=0; i<layouts.length ;i++) {
@@ -115,12 +115,12 @@ function hasTemplateGotTitlePLaceHolder(layout)
  */
 function insertGivenContent(formObject)
 {
-  if(!shouldRunInsertGivenContent(formObject))
+  if(!shouldRunInsertGivenContentBoolean(formObject))
   {
     return false;
   }
-  var layoutTitleTemplate = getTemplate(formObject['title-layout-template']);
-  var layoutMainTemplate = getTemplate(formObject['layout-template']);
+  var layoutTitleTemplate = getTemplateObject(formObject['title-layout-template']);
+  var layoutMainTemplate = getTemplateObject(formObject['layout-template']);
   if(!hasTemplateGotTitlePLaceHolder(layoutTitleTemplate)){
     SlidesApp.getUi()
       .alert('Title template dose not have a "Title text placeholder". Please try again.');
@@ -131,7 +131,7 @@ function insertGivenContent(formObject)
       .alert('Main template dose not have a "Body text placeholder". Please try again.');
     return;
   }
-  var contentArray = splitContent(formObject['content-text']);
+  var contentArray = splitContentStringIntoArray(formObject['content-text']);
   for(var i=0; i<contentArray.length ;i++){
     if(contentArray[i][0] === '#'){
       createTitleSlide(layoutTitleTemplate, contentArray[i].substring(1));
