@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('style'); ?>
+    <script>
+      function preventFormSubmit() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(event) {
+            event.preventDefault();
+          });
+        }
+      }
+      window.addEventListener('load', preventFormSubmit);
+    </script>
+  </head>
+  <body>
+    <nav>
+      <button onclick="google.script.run.showInstructionsSidebar()">Instructions</button>
+      <button onclick="google.script.run.showInsertSidebar()" disabled>Create Slides</button>
+    </nav>
+    <h1>Create Slides</h1>
+    <form id="myForm" onsubmit="google.script.run.insertGivenContent(this)">
+      <input type="submit" class=" col12" value="Submit" />
+      <br/>
+      <br/>
+      <label for="title-layout-template">The Title layout template: </label>
+      <br/>
+      <small class="text-muted">allowed selections have a "Title placeholder"</small>
+      <select id="title-layout-template" class=" col12" name="title-layout-template">
+          <option value="" disabled selected>Loading ...</option>
+      </select>
+      <br/>
+      <br/>
+      <label for="layout-template">The Main layout template: </label>
+      <br/>
+      <small class="text-muted">allowed selections have a "Body text placeholder"</small>
+      <select id="layout-template" class=" col12" name="layout-template">
+          <option value="" disabled selected>Loading ...</option>
+      </select>
+      <br/>
+      <br/>
+      <label for="content-text">Content Text:</label>
+      <br/>
+      <textarea id="content-text" name="content-text" rows="50" style="height:100%; width:100%">Insert plain text content here</textarea>
+      <br>   
+      <input type="submit" value="Submit" />
+    </form>
+    <script>
+      document.addEventListener(
+        'DOMContentLoaded',
+        () => {
+          google.script.run.withSuccessHandler(updateDropdowns)
+            .getDropdownsInnerHtmlObject();
+        }
+      );
+      function updateDropdowns(innerHTML) {
+        document.getElementById('title-layout-template').innerHTML = innerHTML['title-layouts'];
+        document.getElementById('layout-template').innerHTML = innerHTML['body-text-layouts'];
+      }
+      function showTemplatesFailure(error){
+        var div = document.getElementById('layout-template');
+        div.innerHTML = '<option class="error">Ooops, my deputy failed to find the layouts. No more chips for him!</option>';
+      }
+    </script>
+  </body>
+</html>

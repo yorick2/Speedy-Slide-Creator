@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('style'); ?>
+  </head>
+  <body>
+    <nav>
+      <button onclick="google.script.run.showInstructionsSidebar()" disabled>Instructions</button>
+      <button onclick="google.script.run.showInsertSidebar()">Create Slides</button>
+    </nav>
+    <h1>Instructions</h1>
+    <ul>
+      <li>Select "Add-ons>Speedy Slide Creator>Create Slides" to open the main sidebar</li>
+      <li>select the required template(s) [see below for more detail]</li>
+      <li>fill in the textbox with the text</li>
+      <li>click "submit"</li>
+      <li>Enjoy your new slides added to the end of your presentation</li>
+    </ul>
+
+    <h2>How content is split</h2>
+    <ul>
+      <li>Text will go onto a new slide when theres a new paragraph (a blank text line)</li>
+      <li>A paragraph starting with a # (i.e. no starting spaces) will use the Title template selected</li>
+      <li>A Title template will use the first line not starting with a # as the start of the body text for this slide. The lines before this will go in the title.</li>
+    </ul>
+  </body>
+</html>

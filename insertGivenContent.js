@@ -60,31 +60,43 @@ function createMainSlide(template,text) {
 }
 
 /**
+ * @param string textString
+ * @return object
+ */
+function getTitleContentObject(textString){
+  var indexOfBodyText = textString.search('\r?\n[^#]'); //first line notstarting with #
+  var object =  {
+    'title': textString.substring(1)
+              .slice(0,indexOfBodyText)
+              .replace(/\r?\n[#]/,'\r\n'),
+    'body-text':  textString.slice(indexOfBodyText + 1)
+  };
+  return object;
+}
+
+/**
  * 
  * @param object template layout template
- * @param string text
+ * @param object contrentObject
  */
-function createTitleSlide(template,text) {
+function createTitleSlide(template,contentObject) {
   var slide = SlidesApp.getActivePresentation()
     .appendSlide(template);
   slide.getPlaceholder(SlidesApp.PlaceholderType.TITLE)
     .asShape()
     .getText()
-    .setText(text);
+    .setText(contentObject['title']);
+  if(contentObject['body-text'].length === 0){
+    return;
+  }
+  if(!hasTemplateGotBodyTextPLaceHolder(slide)){
+    return;
+  }
+  slide.getPlaceholder(SlidesApp.PlaceholderType.BODY)
+  .asShape()
+  .getText()
+  .setText(contentObject['body-text']);
 }
-
-// /**
-//  * @return array 
-//  */
-// function getActivePresentationLayoutsHaveBodyTextPlaceholder()
-// {
-//   var output = [];
-//   var layouts = SlidesApp.getActivePresentation().getLayouts();
-//   for(var i=0; i<layouts.length ;i++){
-//     output[layouts[i].getLayoutName()] = hasTemplateGotBodyTextPLaceHolder(layouts[i])
-//   }
-//   return output;
-// }
 
 /**
  * @param object layout
@@ -108,6 +120,10 @@ function hasTemplateGotTitlePLaceHolder(layout)
       return false;
     }
     return true;
+}
+
+function showSuccessMessage() {
+  SlidesApp.getUi().alert('Slides added to the end of presentation successfully');
 }
 
 /**
@@ -134,9 +150,11 @@ function insertGivenContent(formObject)
   var contentArray = splitContentStringIntoArray(formObject['content-text']);
   for(var i=0; i<contentArray.length ;i++){
     if(contentArray[i][0] === '#'){
-      createTitleSlide(layoutTitleTemplate, contentArray[i].substring(1));
+      var contentObject = getTitleContentObject(contentArray[i]);
+      createTitleSlide(layoutTitleTemplate, contentObject);
       continue;
     }
     createMainSlide(layoutMainTemplate,contentArray[i]);  
   }
+  showSuccessMessage();
 }
