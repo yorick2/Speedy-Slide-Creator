@@ -9,7 +9,17 @@ Create multiple slides from text content, both title slides and body text slides
 - fill in the textbox with the text
 - click "submit"
 - Enjoy your new slides added to the end of your presentation
-###How content is split
-- Text will go onto a new slide when theres a new paragraph (a blank text line)
-- A paragraph starting with a # (i.e. no starting spaces) will use the Title template selected
-- A Title template will use the first line not starting with a # as the start of the body text for this slide. The lines before this will go in the title.
+
+###How your text is used?
+- Text will go onto a new slide when theres a blank line
+titles
+- The starting lines of a paragraph which start with a # are used for the title.
+- Starting a line with a space will stop the line being seen as a title.
+- If the first line dosen't starts with a #, then no title is set for that paragraph.
+- Other lines are seen as body text
+
+###Which template is used?
+The template used is based on what text there given for a slide.
+title only => title template
+body only => body template
+title + body => mixed template
