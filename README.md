@@ -1,5 +1,5 @@
 # Speedy-Slide-Creator
-A fast way to create multiple slides in a google slide presentation
+A fast way to create multiple slides in a Google Slide presentation
 
 Create multiple slides from text content, both title slides and body text slides.
 
