@@ -1,6 +1,18 @@
+/**
+ * @param string html filename (not including the .html)
+ * @return string file content
+ */
 function include(File) {
   return HtmlService.createHtmlOutputFromFile(File).getContent();
 };
+
+/**
+ * @param string messaqe
+ */
+function showAlertMessage(message){
+    SlidesApp.getUi()
+      .alert(message);
+}
 
 function onOpen(event)
 {  

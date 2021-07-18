@@ -43,7 +43,6 @@ function getActivePresentationLayoutsHasTitleObject()
  */
 function hasTemplateGotBodyText(layout)
 {
-  console.log();
     if(layout.getPlaceholder(SlidesApp.PlaceholderType.BODY) == null){
       return false;
     }

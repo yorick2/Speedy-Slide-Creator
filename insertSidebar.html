@@ -16,52 +16,79 @@
     </script>
   </head>
   <body>
-    <nav>
-      <button onclick="google.script.run.showInstructionsSidebar()">Instructions</button>
-      <button onclick="google.script.run.showInsertSidebar()" disabled>Create Slides</button>
+    <nav class="tab">
+      <button class="tablinks" onclick="google.script.run.showInstructionsSidebar()">Instructions</button>
+      <button class="tablinks" onclick="google.script.run.showInsertSidebar()" disabled>Create Slides</button>
     </nav>
-    <h1>Create Slides</h1>
-    <form id="myForm" onsubmit="google.script.run.insertGivenContent(this)">
-      <input type="submit" class=" col12" value="Submit" />
-      <br/>
-      <br/>
-      <label for="title-layout-template">The Title layout template: </label>
-      <br/>
-      <small class="text-muted">allowed selections have a "Title placeholder"</small>
-      <select id="title-layout-template" class=" col12" name="title-layout-template">
-          <option value="" disabled selected>Loading ...</option>
-      </select>
-      <br/>
-      <br/>
-      <label for="layout-template">The Main layout template: </label>
-      <br/>
-      <small class="text-muted">allowed selections have a "Body text placeholder"</small>
-      <select id="layout-template" class=" col12" name="layout-template">
-          <option value="" disabled selected>Loading ...</option>
-      </select>
-      <br/>
-      <br/>
-      <label for="content-text">Content Text:</label>
-      <br/>
-      <textarea id="content-text" name="content-text" rows="50" style="height:100%; width:100%">Insert plain text content here</textarea>
-      <br>   
-      <input type="submit" value="Submit" />
-    </form>
+    <main>
+      <h1>Create Slides</h1>
+      <form id="myForm" onsubmit="google.script.run.insertGivenContent(this)">
+        <input type="submit" class=" col12" value="create" />
+        <br/>
+        <br/>
+        <label for="title-layout-template">Title layout template: </label>
+        <br/>
+        <small class="text-muted">allowed selections have a "Title placeholder"</small>
+        <select id="title-layout-template" class=" col12" name="title-layout-template">
+            <option value="" disabled selected>Loading ...</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="body-layout-template">Body layout template: </label>
+        <br/>
+        <small class="text-muted">allowed selections have a "Body text placeholder"</small>
+        <select id="body-layout-template" class=" col12" name="body-layout-template">
+            <option value="" disabled selected>Loading ...</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="mixed-layout-template">Mixed layout template: </label>
+        <br/>
+        <small class="text-muted">allowed selections have a "Title placeholder" & a "Body text placeholder"</small>
+        <select id="mixed-layout-template" class=" col12" name="mixed-layout-template">
+            <option value="" disabled selected>Loading ...</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="content-text">Content Text:</label>
+        <br/>
+        <textarea id="content-text" name="content-text" rows="50" style="height:100%; width:100%">Insert plain text content here</textarea>
+        <br>   
+        <input type="submit" class="col12" value="create" />
+      </form>
+    </main>
     <script>
       document.addEventListener(
         'DOMContentLoaded',
         () => {
           google.script.run.withSuccessHandler(updateDropdowns)
+            .withFailureHandler(showTemplatesFailure)
             .getDropdownsInnerHtmlObject();
         }
       );
       function updateDropdowns(innerHTML) {
         document.getElementById('title-layout-template').innerHTML = innerHTML['title-layouts'];
-        document.getElementById('layout-template').innerHTML = innerHTML['body-text-layouts'];
+        document.getElementById('body-layout-template').innerHTML = innerHTML['body-layouts'];
+        document.getElementById('mixed-layout-template').innerHTML = innerHTML['mixed-layouts'];
       }
       function showTemplatesFailure(error){
-        var div = document.getElementById('layout-template');
-        div.innerHTML = '<option class="error">Ooops, my deputy failed to find the layouts. No more chips for him!</option>';
+        document.getElementById('title-layout-template').innerHTML = '<option value="" selected>(⌣́_⌣̀) sorry, templates couldnt load</option>';
+        document.getElementById('body-layout-template').innerHTML  =  '<option value="" selected>(⌣́_⌣̀) sorry, templates couldnt load</option>';
+        document.getElementById('mixed-layout-template').innerHTML = '<option value="" selected>(⌣́_⌣̀) sorry, templates couldnt load</option>';
+      }
+
+      function updateLinks(FormData){
+        google.script.run
+            .withFailureHandler(insertGivenContentFailure)
+            .insertGivenContent(FormData);
+      }
+      function insertGivenContentFailure(error){
+        google.script.run
+        .showAlertMessage("(⌣́_⌣̀) sorry, something went wrong. Your slides were not created")
+        .withFailureHandler(showTemplatesFailure);
+      }
+      function insertGivenContentFailureMessageFailed(){
+        alert("(⌣́_⌣̀) sorry, something went wrong. Your slides were not created");
       }
     </script>
   </body>
