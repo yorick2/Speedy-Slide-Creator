@@ -22,13 +22,22 @@ e.g.
 #My Title
 Some fun body text
 
-#Another Title
+#My Title
 #Second Line of this title
 Some body text
 and I go on two lines
 
 I am body text without a title.
 I also have multiple lines lbut dont have to
+
+#My title
+ # I start with a space so I am body text and not a title
+
+ # I start with a space so I am body text and not a title
+
+Some body text
+#I am not at the start of the paragraph, so I am just body text and the starting # will show
+some more text in the body
 ```
 
 ### Which template is used?
