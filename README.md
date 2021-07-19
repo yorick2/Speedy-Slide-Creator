@@ -12,10 +12,24 @@ Create multiple slides from text content, both title slides and body text slides
 
 ### How your text is used?
 - Text will go onto a new slide when there is a blank line
-- The starting lines of a paragraph which start with a # are used for the title.
-- Starting a line with a space will stop the line being seen as a title.
+- The first lines of a paragraph which starting a # are used for the title.
+- Starting a line with a space will stop the line being seen as a title, even if the first thing after that space is a #.
 - If the first line doesn't starts with a #, then no title is set for that paragraph.
-- Other lines are seen as body text
+- Lines not starting ith a # are seen as body text
+
+e.g.
+```
+#My Title
+Some fun body text
+
+#Another Title
+#Second Line of this title
+Some body text
+and I go on two lines
+
+I am body text without a title.
+I also have multiple lines lbut dont have to
+```
 
 ### Which template is used?
 The template used is based on what text there given for a slide.
