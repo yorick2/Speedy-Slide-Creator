@@ -19,13 +19,6 @@
         <li>Enjoy your new slides added to the end of your presentation</li>
       </ul>
 
-      <h2>How content is split</h2>
-      <ul>
-        <li>Text will go onto a new slide when theres a new paragraph (a blank text line)</li>
-        <li>A paragraph starting with a # (i.e. no starting spaces) will use the Title template selected</li>
-        <li>A Title template will use the first line not starting with a # as the start of the body text for this slide. The lines before this will go in the title.</li>
-      </ul>
-
       <h2>How your text is used?</h2>
       <ul>
         <li>Text will go onto a new slide when there is a blank line</li>
@@ -35,6 +28,34 @@
         <li>Other lines are seen as body text</li>
       </ul>
       
+      <p>
+e.g.
+<pre>
+#My Title
+Some fun body text
+
+#My Title
+#Second Line of this title
+Some body text
+and I go on two lines
+
+I am body text without a title.
+I also have multiple lines
+
+#My title
+ #I start with a space
+ #so I am body text and not a title
+
+ #I start with a space
+ #so I am body text and not a title
+
+Some body text
+#I am not at the start of the paragraph
+#so I am just body text
+some more text in the body
+</pre>
+      </p>
+
       <h2>Which template is used?</h2>
       <p>The template used is based on what text there given for a slide.</p>
       <ul>
